@@ -1,5 +1,7 @@
 /**
- * Created by 18kohl on 5/16/17.
+ * Position
+ * @author Steven Kohl and Cam Brown
+ * @version 5/27/17
  */
 public class Position {
 
@@ -19,8 +21,8 @@ public class Position {
      * No-args constructor, setting row to 0 and column to 0
      */
     public Position(){
-        row = 0;
-        column = 0;
+        row = -1;
+        column = -1;
     }
 
     /**
@@ -61,6 +63,10 @@ public class Position {
      * @return true if other is a Position and has the same row and column as this Position
      */
     public boolean equals(Object other){
-        return other instanceof Position && other.getRow() == row && other.getColumn() == column;
+        if(other instanceof Position){
+        	Position otherPosition = (Position)other;
+        	return otherPosition.getRow() == row && otherPosition.getColumn() == column;
+        }
+        else return false;
     }
 }

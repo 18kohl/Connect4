@@ -1,5 +1,7 @@
 /**
- * Created by 18kohl on 5/16/17.
+ * ConnectFour
+ * @author Steven Kohl and Cam Brown
+ * @version 5/27/17
  */
 public class ConnectFour implements BoardGame {
     private int[][] board;
@@ -7,63 +9,118 @@ public class ConnectFour implements BoardGame {
     private Position[] winningPositions;
     private int winner;
     
+    /**
+     * Constructor for ConnectFour class
+     */
     public ConnectFour(){
-    	newGame();
+    	board = new int[6][7];
+    	currentPlayer = 1;
+    	winningPositions = new Position[4];
+    	winner = 0;
     }
     
+    /**
+     * creates a new game of Connect Four
+     */
     public void newGame(){
-        board = new int[6][7];
-        for(int[] row : board){
-        	for(int num : row){
-        		num = 0;
-        	}
+        for(int r = 0; r < board.length; r++){
+        	for(int c = 0; c < board[0].length; c++)
+        		board[r][c] = 0;
         }
+        currentPlayer = 1;
+        for(int i = 0; i < winningPositions.length; i++)
+        	winningPositions[i] = new Position();
+        winner = 0;
     }
 
-    @Override
+    /**
+     * checks if the game is over and sets the winner of the game
+     */
     public boolean gameOver() {
-        for(int space : board[0]){
+    	if(getWinner() != 0){
+    		winner = getWinner();
+    		return true;
+    	}
+    	else for(int space : board[0]){
             if(space == 0)
                 return false;
         }
         return true;
     }
 
-    @Override
     public int getWinner() {
+    	//Check for vertical wins
+        for(int player = 1; player <= 2; player++){
+        	for(int c = 0; c <= 6; c++){
+        		for(int r = 0; r <= 2; r++){
+        			if(board[r][c] == player && board[r+1][c] == player && board[r+2][c] == player && board[r+3][c] == player){
+        				for(int i = 0; i < 4; i++)
+        					winningPositions[i] = new Position(r+i, c);
+        				return player;
+        			}
+        		}
+        	}
+        }
+        //Check for horizontal wins
+        for(int player = 1; player <= 2; player++){
+        	for(int r = 0; r <= 5; r++){
+        		for(int c = 0; c <= 3; c++){
+        			if(board[r][c] == player && board[r][c+1] == player && board[r][c+2] == player && board[r][c+3] == player){
+        				for(int i = 0; i < 4; i++)
+        					winningPositions[i] = new Position(r, c+i);
+        				return player;
+        			}
+        		}
+        	}
+        }
+        //Check for forward slash wins
+        for(int player = 1; player <= 2; player++){
+        	for(int r = 3; r <= 5; r++){
+        		for(int c = 0; c <= 3; c++){
+        			if(board[r][c] == player && board[r-1][c+1] == player && board[r-2][c+2] == player && board[r-3][c+3] == player){
+        				for(int i = 0; i < 4; i++)
+        					winningPositions[i] = new Position(r-i, c+i);
+        				return player;
+        			}
+        		}
+        	}
+        }
+        //Check for back slash wins
+        for(int player = 1; player <= 2; player++){
+        	for(int r = 0; r <= 2; r++){
+        		for(int c = 0; c <= 3; c++){
+        			if(board[r][c] == player && board[r+1][c+1] == player && board[r+2][c+2] == player && board[r+3][c+3] == player){
+        				for(int i = 0; i < 4; i++)
+        					winningPositions[i] = new Position(r+i, c+i);
+        				return player;
+        			}
+        		}
+        	}
+        }
         return 0;
     }
 
-    @Override
     public Position[] getWinningPositions() {
-        return new Position[0];
+        return winningPositions;
     }
 
-    @Override
     public boolean columnFull(int column){
-        for(int i = 0; i < 5; i++){
-            if(getBoard()[i][column] == 0)
-                return false;
-        }
-        return true;
+        return (board[0][column] != 0);
     }
-
-    @Override
+    
     public void play(int column) {
-        for(int[] row : board){
-            if(board[row][column] == 0) {
-                board[row][column] = currentPlayer;
-                break;
-            }
-        }
+    	if(!columnFull(column)){
+    		for(int row = board.length-1; row >= 0; row--){
+            	if(board[row][column] == 0) {
+                	board[row][column] = currentPlayer;
+                	break;
+            	}
+        	}
+    		currentPlayer = currentPlayer == 1 ? 2 : 1;
+    	}
     }
 
-    @Override
     public int[][] getBoard() {
         return board;
-    }
-
-    public static void main(String[] args){
-        ConnectFour game = new ConnectFour();
     }
 }

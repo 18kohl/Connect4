@@ -1,7 +1,7 @@
 /**
- * ConnectFour
+ * ConnectFour class, handling the logic behind the ConnectFour game
  * @author Steven Kohl and Cam Brown
- * @version 5/27/17
+ * @version 5/28/17
  */
 public class ConnectFour implements BoardGame {
     private int[][] board;
@@ -35,6 +35,7 @@ public class ConnectFour implements BoardGame {
 
     /**
      * checks if the game is over and sets the winner of the game
+     * @return true if the game is over, false if it is not
      */
     public boolean gameOver() {
     	if(getWinner() != 0){
@@ -48,6 +49,10 @@ public class ConnectFour implements BoardGame {
         return true;
     }
 
+    /**
+     * checks if either player has won the game
+     * @return 1 if player 1 has won, 2 if player 2 has won, 0 if there is currently no winner
+     */
     public int getWinner() {
     	//Check for vertical wins
         for(int player = 1; player <= 2; player++){
@@ -100,14 +105,27 @@ public class ConnectFour implements BoardGame {
         return 0;
     }
 
+    /**
+     * gets the positions of the winning tokens
+     * @return the array of positions representing the win
+     */
     public Position[] getWinningPositions() {
         return winningPositions;
     }
 
+    /**
+     * checks if a given column is full
+     * @param column, which column to check
+     * @return true if the column is full, false if it is not full
+     */
     public boolean columnFull(int column){
         return (board[0][column] != 0);
     }
     
+    /**
+     * places a player's piece in a given column
+     * @param column, the column that the player chooses to place a piece in
+     */
     public void play(int column) {
     	if(!columnFull(column)){
     		for(int row = board.length-1; row >= 0; row--){
@@ -120,6 +138,10 @@ public class ConnectFour implements BoardGame {
     	}
     }
 
+    /**
+     * gets the current state of the game board
+     * @return board, the board representing the Connect Four game
+     */
     public int[][] getBoard() {
         return board;
     }

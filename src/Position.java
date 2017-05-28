@@ -1,11 +1,11 @@
 /**
- * Position
+ * Position class, defining a position with a row and column
  * @author Steven Kohl and Cam Brown
- * @version 5/27/17
+ * @version 5/28/17
  */
 public class Position {
 
-    private int row, column;
+    private int row, col;
 
     /**
      * Parametrized constructor
@@ -14,15 +14,15 @@ public class Position {
      */
     public Position(int r, int c){
         row = r;
-        column = c;
+        col = c;
     }
 
     /**
-     * No-args constructor, setting row to 0 and column to 0
+     * No-args constructor, setting row and column to -1, a nonexistent position
      */
     public Position(){
         row = -1;
-        column = -1;
+        col = -1;
     }
 
     /**
@@ -38,7 +38,7 @@ public class Position {
      * @return the column of the Position
      */
     public int getColumn(){
-        return column;
+        return col;
     }
 
     /**
@@ -54,7 +54,7 @@ public class Position {
      * @param c the column to set
      */
     public void setColumn(int c){
-        column = c;
+        col = c;
     }
 
     /**
@@ -65,7 +65,7 @@ public class Position {
     public boolean equals(Object other){
         if(other instanceof Position){
         	Position otherPosition = (Position)other;
-        	return otherPosition.getRow() == row && otherPosition.getColumn() == column;
+        	return otherPosition.getRow() == row && otherPosition.getColumn() == col;
         }
         else return false;
     }

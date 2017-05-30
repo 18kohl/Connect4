@@ -23,6 +23,7 @@ public class ConnectFour implements BoardGame {
      * creates a new game of Connect Four
      */
     public void newGame(){
+    	board = new int[6][7];
         for(int r = 0; r < board.length; r++){
         	for(int c = 0; c < board[0].length; c++)
         		board[r][c] = 0;
@@ -59,8 +60,8 @@ public class ConnectFour implements BoardGame {
         	for(int c = 0; c <= 6; c++){
         		for(int r = 0; r <= 2; r++){
         			if(board[r][c] == player && board[r+1][c] == player && board[r+2][c] == player && board[r+3][c] == player){
-        				for(int i = 0; i < 4; i++)
-        					winningPositions[i] = new Position(r+i, c);
+        				for(int i = 3; i >= 0; i--)
+        					winningPositions[3-i] = new Position(r+i, c);
         				return player;
         			}
         		}
@@ -95,8 +96,8 @@ public class ConnectFour implements BoardGame {
         	for(int r = 0; r <= 2; r++){
         		for(int c = 0; c <= 3; c++){
         			if(board[r][c] == player && board[r+1][c+1] == player && board[r+2][c+2] == player && board[r+3][c+3] == player){
-        				for(int i = 0; i < 4; i++)
-        					winningPositions[i] = new Position(r+i, c+i);
+        				for(int i = 3; i >= 0; i--)
+        					winningPositions[3-i] = new Position(r+i, c+i);
         				return player;
         			}
         		}

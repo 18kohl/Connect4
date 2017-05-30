@@ -53,7 +53,7 @@ public class Position {
      * Mutator method for the column
      * @param c the column to set
      */
-    public void setColumn(int c){
+    public void setCol(int c){
         col = c;
     }
 
